@@ -1,0 +1,6 @@
+{
+  "name": "Vibe Check",
+  "description": "Artisanal fast-casual smash burger restaurant and digital ordering hub in Malakpet, Hyderabad with interactive 34-item menu, WhatsApp ordering, and admin analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

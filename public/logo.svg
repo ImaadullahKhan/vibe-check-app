@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Transparent background for dark theme -->
+  <circle cx="250" cy="250" r="236" fill="#090D16" stroke="#334155" stroke-width="4" />
+  <circle cx="250" cy="250" r="226" fill="none" stroke="#FF2600" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.4" />
+  
+  <g transform="translate(68, 85)">
+    <!-- ViBE (Stacked Line 1) -->
+    <!-- V -->
+    <path d="M 10 15 L 42 15 L 60 115 L 80 15 L 112 15 L 78 142 L 42 142 Z" fill="#FF2600" />
+    
+    <!-- i (Lowercase with tilted dot) -->
+    <circle cx="140" cy="30" r="16" fill="#FF2600" />
+    <rect x="124" y="58" width="32" height="84" rx="6" fill="#FF2600" />
+
+    <!-- B (Chunky with transparent cutout slits) -->
+    <path 
+      d="M 172 15 L 244 15 C 272 15 286 30 286 58 C 286 72 276 82 264 87 C 282 93 292 106 292 124 C 292 142 274 142 244 142 L 172 142 Z M 200 44 C 216 33 238 38 248 50 C 238 56 216 60 200 54 Z M 200 96 C 216 104 238 110 250 104 C 240 118 218 122 200 110 Z" 
+      fill="#FF2600" 
+      fill-rule="evenodd" 
+    />
+
+    <!-- E -->
+    <path d="M 306 15 L 388 15 L 388 48 L 344 48 L 344 62 L 380 62 L 380 92 L 344 92 L 344 108 L 390 108 L 390 142 L 306 142 Z" fill="#FF2600" />
+
+    <!-- CHECK (Stacked Line 2) -->
+    <!-- C -->
+    <path d="M 16 230 C 16 190 32 172 60 172 C 82 172 92 182 95 190 L 73 203 C 71 197 66 193 60 193 C 48 193 40 205 40 230 C 40 255 48 266 60 266 C 66 266 71 263 73 257 L 95 270 C 92 278 82 288 60 288 C 32 288 16 270 16 230 Z" fill="#FF2600" />
+
+    <!-- H -->
+    <path d="M 104 172 L 132 172 L 132 214 L 166 214 L 166 172 L 194 172 L 194 288 L 166 288 L 166 244 L 132 244 L 132 288 L 104 288 Z" fill="#FF2600" />
+
+    <!-- E -->
+    <path d="M 206 172 L 274 172 L 274 200 L 238 200 L 238 214 L 268 214 L 268 238 L 238 238 L 238 260 L 278 260 L 278 288 L 206 288 Z" fill="#FF2600" />
+
+    <!-- C -->
+    <path d="M 290 230 C 290 190 306 172 334 172 C 356 172 366 182 369 190 L 347 203 C 345 197 340 193 334 193 C 322 193 314 205 314 230 C 314 255 322 266 334 266 C 340 266 345 263 347 257 L 369 270 C 366 278 356 288 334 288 C 306 288 290 270 290 230 Z" fill="#FF2600" />
+
+    <!-- K -->
+    <path d="M 380 172 L 408 172 L 408 220 L 442 172 L 472 172 L 432 226 L 476 288 L 442 288 L 412 242 L 408 248 L 408 288 L 380 288 Z" fill="#FF2600" />
+  </g>
+
+  <!-- SMASH BURGERS Subtitle in White for Dark Theme -->
+  <text 
+    x="250" 
+    y="410" 
+    text-anchor="middle" 
+    font-family="'Outfit', 'Montserrat', 'Inter', sans-serif" 
+    font-size="25" 
+    font-weight="900" 
+    letter-spacing="9" 
+    fill="#FFFFFF"
+  >
+    SMASH BURGERS
+  </text>
+</svg>
