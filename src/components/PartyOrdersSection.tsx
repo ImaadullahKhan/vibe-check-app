@@ -13,6 +13,7 @@ import {
   Building2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { DateTimePicker } from './DateTimePicker';
 
 interface PartyOrdersSectionProps {
   onWhatsAppClick: (source: string) => void;
@@ -23,7 +24,8 @@ export const PartyOrdersSection: React.FC<PartyOrdersSectionProps> = ({
 }) => {
   const [eventType, setEventType] = useState('Birthday Party');
   const [guestCount, setGuestCount] = useState('25-50 People');
-  const [eventDate, setEventDate] = useState('');
+  const [eventDate, setEventDate] = useState<Date | null>(null);
+  const [eventTime, setEventTime] = useState('');
   const [contactPerson, setContactPerson] = useState('');
   const [contactPhone, setContactPhone] = useState('');
   const [packagePreference, setPackagePreference] = useState('Full Smash Burgers & Shakes Box');
@@ -32,13 +34,18 @@ export const PartyOrdersSection: React.FC<PartyOrdersSectionProps> = ({
   const handleCateringSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const formattedDate = eventDate 
+      ? eventDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      : 'Flexible / To be finalized';
+
     const inquiryMessage = `🎉 *PARTY & BULK CATERING INQUIRY - VIBE CHECK*
 ━━━━━━━━━━━━━━━━━━━
 👤 *Organizer Name:* ${contactPerson.trim() || 'Valued Host'}
 📞 *Contact Phone:* ${contactPhone.trim() || 'Direct WhatsApp'}
 🎈 *Event Type:* ${eventType}
 👥 *Expected Guests:* ${guestCount}
-📅 *Preferred Event Date/Time:* ${eventDate || 'Flexible / To be finalized'}
+📅 *Preferred Event Date:* ${formattedDate}
+⏰ *Preferred Event Time:* ${eventTime || 'Flexible / To be finalized'}
 🍔 *Package Preference:* ${packagePreference}
 ${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
 ━━━━━━━━━━━━━━━━━━━
@@ -259,41 +266,35 @@ ${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
 
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* Event Date & Time */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300" htmlFor="catering-date-input">
-                    Target Event Date & Time
-                  </label>
-                  <input
-                    id="catering-date-input"
-                    type="text"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                    placeholder="e.g. Next Saturday, 7:00 PM"
-                    className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-rose-500"
-                  />
-                </div>
+              {/* Event Date & Time Custom Picker */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-300">
+                  Target Date & Time
+                </label>
+                <DateTimePicker 
+                  selectedDate={eventDate}
+                  onDateSelect={setEventDate}
+                  selectedTime={eventTime}
+                  onTimeSelect={setEventTime}
+                />
+              </div>
 
-                {/* Package Preference */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300" htmlFor="catering-package-select">
-                    Package Selection
-                  </label>
-                  <select
-                    id="catering-package-select"
-                    value={packagePreference}
-                    onChange={(e) => setPackagePreference(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-rose-500"
-                  >
-                    <option value="Full Smash Burgers & Shakes Box">Full Smash Burgers & Shakes Box</option>
-                    <option value="Mini Slider Platters & Loaded Fries">Mini Slider Platters & Loaded Fries</option>
-                    <option value="Wraps & Coolers Combo Box">Wraps & Coolers Combo Box</option>
-                    <option value="Custom Mixed Menu">Custom Mixed Menu</option>
-                  </select>
-                </div>
-
+              {/* Package Preference */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-slate-300" htmlFor="catering-package-select">
+                  Package Selection
+                </label>
+                <select
+                  id="catering-package-select"
+                  value={packagePreference}
+                  onChange={(e) => setPackagePreference(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-rose-500"
+                >
+                  <option value="Full Smash Burgers & Shakes Box">Full Smash Burgers & Shakes Box</option>
+                  <option value="Mini Slider Platters & Loaded Fries">Mini Slider Platters & Loaded Fries</option>
+                  <option value="Wraps & Coolers Combo Box">Wraps & Coolers Combo Box</option>
+                  <option value="Custom Mixed Menu">Custom Mixed Menu</option>
+                </select>
               </div>
 
               {/* Special Instructions */}
