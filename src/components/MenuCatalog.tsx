@@ -21,7 +21,6 @@ interface MenuCatalogProps {
   cartQuantities: Record<number, number>;
   onOpenCart: () => void;
   cartTotalCount: number;
-  onOpenMediaUpload?: () => void;
 }
 
 export const MenuCatalog: React.FC<MenuCatalogProps> = ({
@@ -30,13 +29,11 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
   cartQuantities,
   onOpenCart,
   cartTotalCount,
-  onOpenMediaUpload
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [vegOnly, setVegOnly] = useState(false);
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high'>('featured');
-  const [showDiagnostics, setShowDiagnostics] = useState<boolean>(false);
 
   // Filter and sort items
   const filteredItems = useMemo(() => {
@@ -153,34 +150,6 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
             <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
-          {/* Image Diagnostics / Debug Mode Toggle */}
-          <button
-            id="image-diagnostics-toggle"
-            onClick={() => setShowDiagnostics(!showDiagnostics)}
-            title="Toggle filename debug overlay to see mapping target for each card"
-            className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
-              showDiagnostics
-                ? 'bg-rose-600 text-white border-rose-500 shadow-lg shadow-rose-950/40'
-                : 'bg-slate-900/90 text-slate-400 border-slate-800 hover:text-slate-200 hover:border-slate-700'
-            }`}
-          >
-            <Wrench className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Debug Paths</span>
-          </button>
-
-          {/* Quick Media Upload Button */}
-          {onOpenMediaUpload && (
-            <button
-              id="menu-catalog-upload-photos-btn"
-              onClick={onOpenMediaUpload}
-              title="Upload burger & menu item photos"
-              className="flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/40 hover:border-rose-500 transition-all shadow-md shadow-rose-950/20"
-            >
-              <UploadCloud className="w-3.5 h-3.5" />
-              <span>Upload Photos</span>
-            </button>
-          )}
-
         </div>
       </div>
 
@@ -209,22 +178,6 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
           );
         })}
       </div>
-
-      {/* Diagnostic Helper Banner when active */}
-      {showDiagnostics && (
-        <div className="mb-6 p-4 rounded-2xl bg-slate-900/90 border border-rose-500/40 text-xs text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <HelpCircle className="w-4 h-4 text-rose-400 shrink-0" />
-            <div>
-              <span className="font-bold text-white">Path Inspector Active:</span>{' '}
-              Targeting dash-formatted image files in <code className="bg-slate-950 px-1.5 py-0.5 rounded text-rose-300">/public/images/menu/</code> &amp; <code className="bg-slate-950 px-1.5 py-0.5 rounded text-rose-300">/public/menu/</code>.
-            </div>
-          </div>
-          <span className="text-[11px] text-slate-400">
-            Files matching either hyphenated, underscored, or lowercased names are auto-resolved.
-          </span>
-        </div>
-      )}
 
       {/* Empty State */}
       {filteredItems.length === 0 && (
@@ -258,7 +211,6 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
               onAddToCart={(item) => onAddToCart(item, 1)}
               onUpdateQuantity={handleUpdateQuantity}
               onSelectItem={onSelectItem}
-              showDebugInfo={showDiagnostics}
             />
           );
         })}

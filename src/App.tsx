@@ -19,7 +19,6 @@ import { InstagramReelsSection } from './components/InstagramReelsSection';
 import { PaymentNoticeBanner } from './components/PaymentNoticeBanner';
 import { ComplianceFooter } from './components/ComplianceFooter';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
-import { ImageUploadModal } from './components/ImageUploadModal';
 import { recordVisit, recordWhatsAppClick } from './utils/analytics';
 import { initImageStore } from './utils/imageStore';
 import { MenuItem, CartItem } from './types';
@@ -29,7 +28,6 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedModalItem, setSelectedModalItem] = useState<MenuItem | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [isMediaUploadOpen, setIsMediaUploadOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Initialize image store and record visitor session count
@@ -153,7 +151,6 @@ Please confirm availability and prep time!`;
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAdmin={() => setIsAdminOpen(true)}
-        onOpenMediaUpload={() => setIsMediaUploadOpen(true)}
         onWhatsAppClick={(src) => handleWhatsAppAction(src)}
       />
 
@@ -181,7 +178,6 @@ Please confirm availability and prep time!`;
           cartQuantities={cartQuantities}
           onOpenCart={() => setIsCartOpen(true)}
           cartTotalCount={totalCartCount}
-          onOpenMediaUpload={() => setIsMediaUploadOpen(true)}
         />
 
         {/* 6. Dedicated Party Orders & Catering Section */}
@@ -263,12 +259,6 @@ Please confirm availability and prep time!`;
       <AdminDashboardModal
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
-      />
-
-      {/* 11. Instant Menu Photos Uploader Modal */}
-      <ImageUploadModal
-        isOpen={isMediaUploadOpen}
-        onClose={() => setIsMediaUploadOpen(false)}
       />
 
     </div>

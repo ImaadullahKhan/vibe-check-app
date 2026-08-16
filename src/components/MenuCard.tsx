@@ -10,7 +10,6 @@ interface MenuCardProps {
   onAddToCart: (item: MenuItem) => void;
   onUpdateQuantity: (id: number, delta: number) => void;
   onSelectItem: (item: MenuItem) => void;
-  showDebugInfo?: boolean;
 }
 
 export const MenuCard: React.FC<MenuCardProps> = ({
@@ -19,7 +18,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({
   onAddToCart,
   onUpdateQuantity,
   onSelectItem,
-  showDebugInfo = false,
 }) => {
   const [storeVersion, setStoreVersion] = useState<number>(0);
   const { expectedPath, candidateUrls, config } = getItemImageCandidates(item);
@@ -151,7 +149,7 @@ export const MenuCard: React.FC<MenuCardProps> = ({
           </div>
 
           {/* Bestseller Badge */}
-          {item.isBestseller && !showDebugInfo && (
+          {item.isBestseller && (
             <div className="absolute top-3 right-3 group-hover:opacity-0 transition-opacity bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold text-[10px] uppercase px-2 py-0.5 rounded shadow z-10">
               Bestseller
             </div>
@@ -182,33 +180,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({
           >
             <Info className="w-3.5 h-3.5" />
           </button>
-
-          {/* Debug info if enabled */}
-          {showDebugInfo && (
-            <div className="absolute inset-x-0 top-0 bg-slate-950/95 backdrop-blur-md p-2 border-b border-slate-800 text-[10px] text-slate-300 z-20">
-              <div className="flex items-center justify-between gap-1 mb-1">
-                <span className="font-mono text-rose-400 font-bold">ID #{item.id}</span>
-                <span className={`px-1.5 py-0.2 rounded font-semibold text-[9px] flex items-center gap-1 ${
-                  imageLoaded && !imageError
-                    ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-                    : 'bg-slate-900 text-slate-400 border border-slate-700'
-                }`}>
-                  {imageLoaded && !imageError ? (
-                    <>
-                      <CheckCircle2 className="w-2.5 h-2.5" /> Found
-                    </>
-                  ) : (
-                    <>
-                      <AlertCircle className="w-2.5 h-2.5" /> Missing in /menu
-                    </>
-                  )}
-                </span>
-              </div>
-              <div className="font-mono text-[9px] truncate text-slate-400">
-                Target: <span className="text-white">{expectedPath}</span>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Card Body */}

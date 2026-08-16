@@ -17,7 +17,6 @@ interface NavbarProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenAdmin: () => void;
-  onOpenMediaUpload?: () => void;
   onWhatsAppClick: (source: string) => void;
 }
 
@@ -25,7 +24,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   cartCount,
   onOpenCart,
   onOpenAdmin,
-  onOpenMediaUpload,
   onWhatsAppClick
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -93,20 +91,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
           
-          {/* Photos Upload Trigger */}
-          {onOpenMediaUpload && (
-            <button
-              id="navbar-upload-photos-btn"
-              onClick={onOpenMediaUpload}
-              aria-label="Upload Menu Photos"
-              className="flex items-center gap-1.5 text-xs text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 px-2.5 py-2 rounded-lg transition-all duration-200"
-              title="Upload burger & menu photos"
-            >
-              <UploadCloud className="w-3.5 h-3.5 text-rose-400" />
-              <span className="font-semibold">Upload Photos</span>
-            </button>
-          )}
-
           {/* Admin Login Trigger */}
           <button
             id="navbar-admin-btn"
