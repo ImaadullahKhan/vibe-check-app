@@ -651,6 +651,7 @@ export function getItemImageCandidates(
     variations.forEach(v => {
       candidates.push(encodeURI(`/images/menu/${v}`));
       candidates.push(encodeURI(`/menu/${v}`));
+      candidates.push(encodeURI(`/${v}`));
     });
   };
 
