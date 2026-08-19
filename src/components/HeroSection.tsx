@@ -291,17 +291,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             </div>
 
-            {/* Floating Trust Pill */}
-            <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-slate-900 border border-slate-700/80 shadow-2xl rounded-2xl p-3 flex items-center gap-3 backdrop-blur-md max-w-xs">
-              <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-700/60 flex items-center justify-center text-emerald-400 shrink-0">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">FSSAI Certified Hygiene</p>
-                <p className="text-[10px] text-slate-400">Reg #23626034002366</p>
-              </div>
-            </div>
-
           </div>
 
         </div>

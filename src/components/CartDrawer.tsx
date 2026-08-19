@@ -87,6 +87,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [couponInput, setCouponInput] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState(false);
 
   if (!isOpen) return null;
 
@@ -136,11 +137,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const handleCheckout = () => {
+    if (customerName.trim() === '') {
+      setNameError(true);
+      // Optional: you could scroll to the name input here if the page is long, 
+      // but the drawer is small enough that the user will see the error.
+      return;
+    }
+
+    const formattedItems = cartItems.map(ci => 
+      `${ci.quantity}x ${ci.item.name} (₹${ci.item.price * ci.quantity})` + 
+      (ci.customization ? `\n   ↳ "${ci.customization}"` : '')
+    ).join('\n');
+
     onProceedToWhatsApp({
       customerName,
       orderType,
       orderNotes,
-      couponApplied: appliedCoupon
+      couponApplied: appliedCoupon,
+      items: formattedItems,
+      totalAmount: finalTotal
     });
   };
 
@@ -163,7 +178,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <ShoppingBag className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-['Outfit',sans-serif] text-lg font-bold text-white">Your Order Box</h3>
+              <h3 className="font-['Outfit',sans-serif] text-lg font-bold text-white">Your Cart</h3>
               <p className="text-xs text-slate-400">{totalItemCount} delicious item(s) selected</p>
             </div>
           </div>
@@ -196,7 +211,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               <div className="w-16 h-16 rounded-3xl bg-slate-950 border border-slate-800 flex items-center justify-center text-slate-600 mb-4">
                 <ShoppingBag className="w-8 h-8" />
               </div>
-              <h4 className="text-base font-bold text-white mb-1">Your Box is Empty</h4>
+              <h4 className="text-base font-bold text-white mb-1">Your Cart is Empty</h4>
               <p className="text-xs text-slate-400 max-w-xs mb-6">
                 Add juicy smash burgers, crispy &apos;wiches, loaded fries, and thick shakes to assemble your feast.
               </p>
@@ -296,7 +311,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     }`}
                   >
                     <Bike className={`w-4 h-4 mx-auto mb-1 ${orderType === 'rapido' ? 'text-rose-400' : 'text-slate-500'}`} />
-                    <span className="block text-[11px] font-bold">Rapido / Porter</span>
+                    <span className="block text-[11px] font-bold">Pickup Service</span>
                     <span className="block text-[9px] text-slate-500">Customer Book</span>
                   </button>
 
@@ -320,16 +335,29 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               {/* Customer Name & Notes */}
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
-                    Your Name (Optional)
+                  <label className="block text-xs font-bold text-slate-300 mb-0.5 flex justify-between items-center">
+                    <span>Your Name <span className="text-rose-400">*</span></span>
                   </label>
+                  <p className="text-[10px] text-slate-400 mb-1.5 leading-tight">
+                    Required to associate and fulfill your order upon arrival.
+                  </p>
                   <input
                     type="text"
                     value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
+                    onChange={(e) => {
+                      setCustomerName(e.target.value);
+                      if (nameError) setNameError(false);
+                    }}
                     placeholder="e.g. Zaid / Ananya"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                    className={`w-full bg-slate-950 border rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors ${
+                      nameError ? 'border-rose-500' : 'border-slate-800 focus:border-rose-500'
+                    }`}
                   />
+                  {nameError && (
+                    <p className="text-[10px] text-rose-400 font-medium mt-1 px-1">
+                      Please enter your name to proceed.
+                    </p>
+                  )}
                 </div>
 
                 <div>

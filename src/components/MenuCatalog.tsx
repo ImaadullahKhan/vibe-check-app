@@ -77,7 +77,7 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
   };
 
   return (
-    <section id="menu-catalog" className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section id="menu-catalog" className="scroll-mt-24 py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
@@ -233,7 +233,7 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
               </div>
             </div>
             <span className="bg-slate-950 text-white text-xs font-extrabold px-3 py-1.5 rounded-xl border border-white/20">
-              View Box →
+              View Cart →
             </span>
           </button>
         </div>

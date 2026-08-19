@@ -235,7 +235,7 @@ export const MenuCard: React.FC<MenuCardProps> = ({
               <Minus className="w-3.5 h-3.5" />
             </button>
             <span className="text-xs font-black text-white px-2">
-              {inCartCount} in Bag
+              {inCartCount} in Cart
             </span>
             <button
               onClick={() => onUpdateQuantity(item.id, 1)}

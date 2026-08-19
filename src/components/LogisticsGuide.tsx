@@ -24,7 +24,7 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
   onWhatsAppClick
 }) => {
   return (
-    <section id="how-to-order" className="py-14 sm:py-20 bg-slate-900/40 border-y border-slate-800/80 relative">
+    <section id="how-to-order" className="scroll-mt-24 py-14 sm:py-20 bg-slate-900/40 border-y border-slate-800/80 relative">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -107,12 +107,12 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
                   WhatsApp Direct Kitchen
                 </span>
                 <h3 className="text-xl font-bold text-white mt-1">
-                  Self-Pickup / Rapido Delivery
+                  Self-Pickup / Pickup Service
                 </h3>
               </div>
 
               <p className="text-sm text-slate-300 leading-relaxed">
-                Place your order directly via our interactive WhatsApp catalog. The kitchen prepares your smash order fresh in 10 minutes. Pick up yourself at Malakpet or book a Rapido/Dunzo bike partner for instant pickup!
+                Place your order directly via our interactive WhatsApp catalog. The kitchen prepares your smash order fresh in 10 minutes. Pick up yourself at Malakpet or book any pickup service for instant pickup using your name as a reference!
               </p>
 
               <div className="space-y-2 pt-2 border-t border-slate-800/80 text-xs text-slate-300">
@@ -131,7 +131,7 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
               </div>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-slate-800">
+            <div className="pt-5 mt-6 border-t border-slate-800 space-y-4">
               <button
                 id="logistics-order-now-btn"
                 onClick={onExploreMenu}
@@ -140,6 +140,25 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
                 <MessageCircle className="w-4 h-4 fill-white" />
                 <span>Build Order & Send to WhatsApp</span>
               </button>
+
+              <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
+                <div className="bg-white p-2 rounded-xl shrink-0">
+                  <img 
+                    src="/whatsapp_qr.png" 
+                    alt="WhatsApp QR Code to scan and open our menu catalog for ordering"
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiIHJ5PSIyIi8+PHBhdGggZD0iTTggMTBoLjAxIi8+PHBhdGggZD0iTTE2IDEwaC4wMSIvPjxwYXRoIGQ9Ik04IDE0aC4wMSIvPjxwYXRoIGQ9Ik0xNiAxNGguMDEiLz48L3N2Zz4=';
+                    }}
+                  />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-emerald-400 mb-1">Order Instantly via WhatsApp</h4>
+                  <p className="text-xs text-slate-400 leading-tight">
+                    Scan this code with your phone camera to view our full catalog and place your order directly in WhatsApp.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 

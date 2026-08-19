@@ -10,14 +10,12 @@ interface DateTimePickerProps {
 
 const generateTimeSlots = () => {
   const slots: string[] = [];
-  // 12:00 PM to 11:30 PM
-  for (let h = 12; h <= 23; h++) {
+  // 2:00 PM to 11:30 PM
+  for (let h = 14; h <= 23; h++) {
     const displayHour = h === 12 ? 12 : h - 12;
     slots.push(`${displayHour}:00 PM`);
     slots.push(`${displayHour}:30 PM`);
   }
-  // After midnight (Next day conceptually, but usually selected on the same day for nightlife/late night food)
-  slots.push('12:00 AM', '12:30 AM', '1:00 AM', '1:30 AM');
   return slots;
 };
 
@@ -153,16 +151,42 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
         <div className="grid grid-cols-2 gap-2 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
           {timeSlots.map((time) => {
             const isTimeSelected = selectedTime === time;
+            
+            // Check if the time slot has already passed today
+            let isPastTime = false;
+            if (selectedDate) {
+              const now = new Date();
+              if (
+                selectedDate.getDate() === now.getDate() &&
+                selectedDate.getMonth() === now.getMonth() &&
+                selectedDate.getFullYear() === now.getFullYear()
+              ) {
+                const [timeStr, period] = time.split(' ');
+                let [hours, minutes] = timeStr.split(':').map(Number);
+                if (period === 'PM' && hours !== 12) hours += 12;
+                if (period === 'AM' && hours === 12) hours = 0;
+                
+                const slotTime = new Date(selectedDate);
+                slotTime.setHours(hours, minutes, 0, 0);
+                
+                isPastTime = slotTime <= now;
+              }
+            }
+
             return (
               <button
                 key={time}
                 type="button"
-                onClick={() => onTimeSelect(time)}
+                disabled={isPastTime}
+                onClick={() => !isPastTime && onTimeSelect(time)}
                 className={`
                   py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all border
-                  ${isTimeSelected 
-                    ? 'bg-rose-600 text-white border-rose-500 shadow-md shadow-rose-900/50' 
-                    : 'bg-slate-900 text-slate-300 border-slate-700 hover:border-rose-500/50 hover:bg-slate-800'}
+                  ${isPastTime 
+                    ? 'opacity-30 cursor-not-allowed bg-slate-900 border-slate-800 text-slate-600' 
+                    : isTimeSelected
+                      ? 'bg-rose-600 text-white border-rose-500 shadow-md shadow-rose-900/50'
+                      : 'bg-slate-900 text-slate-300 border-slate-700 hover:border-rose-500/50 hover:bg-slate-800'
+                  }
                 `}
               >
                 {time}

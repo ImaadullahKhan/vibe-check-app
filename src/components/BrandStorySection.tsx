@@ -30,7 +30,7 @@ export const BrandStorySection: React.FC = () => {
   const storyCandidates = storyItem ? getItemImageCandidates(storyItem).candidateUrls : [];
 
   return (
-    <section id="brand-story" className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section id="brand-story" className="scroll-mt-24 py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         

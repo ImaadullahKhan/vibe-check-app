@@ -8,19 +8,16 @@ import {
   Flame, 
   FileText, 
   Award, 
-  Lock, 
   Clock,
   ExternalLink
 } from 'lucide-react';
 import { VibeCheckLogo } from './VibeCheckLogo';
 
 interface ComplianceFooterProps {
-  onOpenAdmin: () => void;
   onWhatsAppClick: (source: string) => void;
 }
 
 export const ComplianceFooter: React.FC<ComplianceFooterProps> = ({
-  onOpenAdmin,
   onWhatsAppClick
 }) => {
   return (
@@ -143,7 +140,7 @@ export const ComplianceFooter: React.FC<ComplianceFooterProps> = ({
               </li>
               <li>
                 <a href="#how-to-order" className="text-slate-400 hover:text-rose-400 transition-colors">
-                  Delivery & Rapido Pickup Guide
+                  Delivery & Pickup Guide
                 </a>
               </li>
               <li>
@@ -173,17 +170,6 @@ export const ComplianceFooter: React.FC<ComplianceFooterProps> = ({
                 <Instagram className="w-4 h-4 text-rose-400" />
                 <span>@vibecheck.cafe</span>
               </a>
-
-              <div>
-                <button
-                  id="footer-admin-btn"
-                  onClick={onOpenAdmin}
-                  className="inline-flex items-center gap-1.5 text-slate-400 hover:text-amber-400 text-xs py-1.5 transition-colors"
-                >
-                  <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Admin Analytics Portal (PIN: vibe2026)</span>
-                </button>
-              </div>
             </div>
 
           </div>
@@ -199,7 +185,7 @@ export const ComplianceFooter: React.FC<ComplianceFooterProps> = ({
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 text-slate-300">
               <Clock className="w-3 h-3 text-amber-400" />
-              <span>Kitchen: 12:00 PM – 2:00 AM Daily</span>
+              <span>Kitchen: 2:00 PM – 11:30 PM Daily</span>
             </span>
           </div>
         </div>

@@ -28,7 +28,12 @@ export const PartyOrdersSection: React.FC<PartyOrdersSectionProps> = ({
   const [eventTime, setEventTime] = useState('');
   const [contactPerson, setContactPerson] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-  const [packagePreference, setPackagePreference] = useState('Full Smash Burgers & Shakes Box');
+  const [fulfillmentMethod, setFulfillmentMethod] = useState('self-pickup');
+  const [burgersCount, setBurgersCount] = useState(0);
+  const [sugarRushCount, setSugarRushCount] = useState(0);
+  const [sidesTendersCount, setSidesTendersCount] = useState(0);
+  const [sandwichesCount, setSandwichesCount] = useState(0);
+  const [spillsCoolersCount, setSpillsCoolersCount] = useState(0);
   const [notes, setNotes] = useState('');
 
   const handleCateringSubmit = (e: React.FormEvent) => {
@@ -36,21 +41,18 @@ export const PartyOrdersSection: React.FC<PartyOrdersSectionProps> = ({
 
     const formattedDate = eventDate 
       ? eventDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-      : 'Flexible / To be finalized';
+      : 'Flexible';
 
-    const inquiryMessage = `🎉 *PARTY & BULK CATERING INQUIRY - VIBE CHECK*
-━━━━━━━━━━━━━━━━━━━
-👤 *Organizer Name:* ${contactPerson.trim() || 'Valued Host'}
-📞 *Contact Phone:* ${contactPhone.trim() || 'Direct WhatsApp'}
-🎈 *Event Type:* ${eventType}
-👥 *Expected Guests:* ${guestCount}
-📅 *Preferred Event Date:* ${formattedDate}
-⏰ *Preferred Event Time:* ${eventTime || 'Flexible / To be finalized'}
-🍔 *Package Preference:* ${packagePreference}
-${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
-━━━━━━━━━━━━━━━━━━━
-📍 *Event Delivery Area:* Hyderabad / Secunderabad
-⚡ *Catering Desk:* Mohammed Mukarram Mohiuddin (+91 9505021177)`;
+    const orderDetails = `Event: ${eventType}, Guests: ${guestCount}
+Date: ${formattedDate}, Time: ${eventTime || 'TBD'}
+Items: ${burgersCount} Burgers, ${sugarRushCount} Sugar Rush, ${sidesTendersCount} Sides, ${sandwichesCount} Sandwiches, ${spillsCoolersCount} Coolers
+Notes: ${notes || 'None'}`;
+
+    const inquiryMessage = `Order type: Party Catering
+Fulfillment method: ${fulfillmentMethod}
+[Customer Name]: ${contactPerson.trim() || 'Valued Host'}
+[Order Details]:
+${orderDetails}`;
 
     const whatsappUrl = `https://wa.me/919505021177?text=${encodeURIComponent(inquiryMessage)}`;
 
@@ -65,7 +67,7 @@ ${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
   };
 
   return (
-    <section id="party-orders" className="py-16 sm:py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800 relative overflow-hidden">
+    <section id="party-orders" className="scroll-mt-24 py-16 sm:py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800 relative overflow-hidden">
       
       {/* Glow */}
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
@@ -248,6 +250,25 @@ ${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
                   />
                 </div>
 
+                {/* Fulfillment Method */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-300" htmlFor="fulfillment-method-select">
+                    Fulfillment Method
+                  </label>
+                  <select
+                    id="fulfillment-method-select"
+                    value={fulfillmentMethod}
+                    onChange={(e) => setFulfillmentMethod(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-rose-500"
+                  >
+                    <option value="self-pickup">Self-pickup</option>
+                    <option value="pickup service">Pickup service</option>
+                    <option value="dine-in">Dine-in</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
                 {/* Contact Phone */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-300" htmlFor="catering-phone-input">
@@ -279,22 +300,42 @@ ${notes ? `📝 *Specific Requests:* ${notes}\n` : ''}
                 />
               </div>
 
-              {/* Package Preference */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-300" htmlFor="catering-package-select">
-                  Package Selection
+              {/* Item Requirements */}
+              <div className="space-y-3">
+                <label className="text-xs font-bold text-slate-300">
+                  Estimated Item Quantities
                 </label>
-                <select
-                  id="catering-package-select"
-                  value={packagePreference}
-                  onChange={(e) => setPackagePreference(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-white focus:outline-none focus:border-rose-500"
-                >
-                  <option value="Full Smash Burgers & Shakes Box">Full Smash Burgers & Shakes Box</option>
-                  <option value="Mini Slider Platters & Loaded Fries">Mini Slider Platters & Loaded Fries</option>
-                  <option value="Wraps & Coolers Combo Box">Wraps & Coolers Combo Box</option>
-                  <option value="Custom Mixed Menu">Custom Mixed Menu</option>
-                </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Category Counters */}
+                  {[
+                    { label: 'Burgers', value: burgersCount, setter: setBurgersCount },
+                    { label: 'Sugar Rush', value: sugarRushCount, setter: setSugarRushCount },
+                    { label: 'Sides & Tenders', value: sidesTendersCount, setter: setSidesTendersCount },
+                    { label: 'Sandwiches', value: sandwichesCount, setter: setSandwichesCount },
+                    { label: 'Spills & Coolers', value: spillsCoolersCount, setter: setSpillsCoolersCount },
+                  ].map((category, idx) => (
+                    <div key={idx} className="flex items-center justify-between bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2">
+                      <span className="text-xs text-slate-300 font-semibold">{category.label}</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => category.setter(Math.max(0, category.value - 1))}
+                          className="w-6 h-6 rounded bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800"
+                        >
+                          -
+                        </button>
+                        <span className="text-xs text-white font-bold w-6 text-center">{category.value}</span>
+                        <button
+                          type="button"
+                          onClick={() => category.setter(category.value + 1)}
+                          className="w-6 h-6 rounded bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Special Instructions */}

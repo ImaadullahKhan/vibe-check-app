@@ -242,14 +242,14 @@ export const ItemDetailModal: React.FC<ItemDetailModalProps> = ({
               </button>
             </div>
 
-            {/* Add to Bag Button */}
+            {/* Add to Cart Button */}
             <button
               id="modal-add-to-cart-btn"
               onClick={handleAdd}
               className="flex-1 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-rose-950/50 transition-colors"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span>Add to Bag • ₹{item.price * quantity}</span>
+              <span>Add to Cart • ₹{item.price * quantity}</span>
             </button>
 
             {/* Direct WhatsApp Quick Order */}

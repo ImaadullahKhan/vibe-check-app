@@ -18,7 +18,6 @@ import { BrandStorySection } from './components/BrandStorySection';
 import { InstagramReelsSection } from './components/InstagramReelsSection';
 import { PaymentNoticeBanner } from './components/PaymentNoticeBanner';
 import { ComplianceFooter } from './components/ComplianceFooter';
-import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { recordVisit, recordWhatsAppClick } from './utils/analytics';
 import { initImageStore } from './utils/imageStore';
 import { MenuItem, CartItem } from './types';
@@ -27,7 +26,6 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedModalItem, setSelectedModalItem] = useState<MenuItem | null>(null);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Initialize image store and record visitor session count
@@ -103,17 +101,30 @@ export default function App() {
       type: customDetails?.type || 'direct_chat',
       items: customDetails?.items || `Action from ${source}`,
       totalAmount: customDetails?.totalAmount || 0,
-      orderMode: customDetails?.orderMode || 'pickup',
+      orderMode: customDetails?.orderType || customDetails?.orderMode || 'pickup',
       customerName: customDetails?.customerName || 'Customer Lead'
     });
+    
+    if (source === 'cart_checkout' && customDetails) {
+      const fulfillmentMap: Record<string, string> = { pickup: 'self-pickup', rapido: 'pickup service', dinein: 'dine-in' };
+      const fulfillment = fulfillmentMap[customDetails.orderType] || 'self-pickup';
+      const message = `Order type: Direct
+Fulfillment method: ${fulfillment}
+[Customer Name]: ${customDetails.customerName}
+[Order Details]:
+${customDetails.items}
+Total: Rs ${customDetails.totalAmount}`;
+
+      window.open(`https://wa.me/919505021177?text=${encodeURIComponent(message)}`, '_blank');
+    }
   };
 
   const handleDirectItemWhatsApp = (item: MenuItem, quantity: number, notes: string) => {
-    const message = `🍔 *ITEM INQUIRY: VIBE CHECK*
+    const message = `*ITEM INQUIRY: VIBE CHECK*
 ━━━━━━━━━━━━━━━━━━━
 Item: ${quantity}x ${item.name} (₹${item.price * quantity})
 ${notes ? `Note: ${notes}\n` : ''}
-📍 Location: Jamuna Towers, Malakpet, Hyderabad
+Location: Jamuna Towers, Malakpet, Hyderabad
 Please confirm availability and prep time!`;
 
     recordWhatsAppClick({
@@ -150,7 +161,6 @@ Please confirm availability and prep time!`;
       <Navbar
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
         onWhatsAppClick={(src) => handleWhatsAppAction(src)}
       />
 
@@ -198,7 +208,6 @@ Please confirm availability and prep time!`;
 
       {/* 9. Business & Statutory Compliance Footer */}
       <ComplianceFooter
-        onOpenAdmin={() => setIsAdminOpen(true)}
         onWhatsAppClick={(src) => handleWhatsAppAction(src)}
       />
 
@@ -246,19 +255,12 @@ Please confirm availability and prep time!`;
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
         onClearCart={handleClearCart}
-        onOrderSubmitted={(orderData) => {
+        onProceedToWhatsApp={(orderData) => {
           handleWhatsAppAction('cart_checkout', orderData);
           handleClearCart();
           setIsCartOpen(false);
         }}
-      />
-
-      {/* 10. Admin Analytics Dashboard Modal */}
-      <AdminDashboardModal
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
       />
 
     </div>

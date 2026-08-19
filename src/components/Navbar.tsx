@@ -4,7 +4,6 @@ import {
   ShoppingBag, 
   Menu as MenuIcon, 
   X, 
-  Lock, 
   Sparkles,
   PhoneCall,
   MessageCircle,
@@ -16,14 +15,12 @@ import { VibeCheckLogo } from './VibeCheckLogo';
 interface NavbarProps {
   cartCount: number;
   onOpenCart: () => void;
-  onOpenAdmin: () => void;
   onWhatsAppClick: (source: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   cartCount,
   onOpenCart,
-  onOpenAdmin,
   onWhatsAppClick
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -91,18 +88,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
           
-          {/* Admin Login Trigger */}
-          <button
-            id="navbar-admin-btn"
-            onClick={onOpenAdmin}
-            aria-label="Admin Portal"
-            className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 hover:text-white bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 px-2.5 py-2 rounded-lg transition-all duration-200"
-            title="Admin & Analytics Dashboard (PIN: vibe2026)"
-          >
-            <Lock className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden md:inline font-medium">Admin</span>
-          </button>
-
           {/* Cart Trigger */}
           <button
             id="navbar-cart-btn"
@@ -111,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="View Order Cart"
           >
             <ShoppingBag className="w-4 h-4 text-amber-400" />
-            <span className="hidden sm:inline text-xs font-medium text-slate-300">Order Box</span>
+            <span className="hidden sm:inline text-xs font-medium text-slate-300">View Cart</span>
             {cartCount > 0 && (
               <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-bold text-white bg-gradient-to-r from-rose-600 to-rose-500 rounded-full animate-bounce">
                 {cartCount}
@@ -178,17 +163,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
 
             <div className="flex items-center justify-between gap-2 pt-1">
-              <button
-                onClick={() => {
-                  onOpenAdmin();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex-1 flex items-center justify-center gap-1.5 text-xs text-slate-400 bg-slate-900 py-2 rounded-lg border border-slate-800"
-              >
-                <Lock className="w-3.5 h-3.5 text-amber-400" />
-                <span>Admin Analytics</span>
-              </button>
-
               <a
                 href="https://www.instagram.com/vibecheck.cafe/"
                 target="_blank"

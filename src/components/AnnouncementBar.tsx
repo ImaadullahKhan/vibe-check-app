@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MapPin, Sparkles, MessageCircle, Flame } from 'lucide-react';
+import { Clock, MapPin, Sparkles, Flame } from 'lucide-react';
 
 export const AnnouncementBar: React.FC = () => {
   return (
@@ -9,32 +9,20 @@ export const AnnouncementBar: React.FC = () => {
         {/* Left: Fresh Catchphrase & Malakpet Location */}
         <div className="flex items-center gap-2 text-[11px] sm:text-xs">
           <span className="flex items-center gap-1 text-rose-400 font-bold bg-rose-950/80 border border-rose-800/50 px-2 py-0.5 rounded-full">
-            <Flame className="w-3 h-3 text-rose-500 fill-rose-500" />
-            <span>Malakpet, Hyderabad</span>
+            <Flame className="w-3 h-3 text-rose-500 fill-rose-500 shrink-0" />
+            <span className="leading-none pt-[1px]">Malakpet, Hyderabad</span>
           </span>
-          <span className="text-slate-300 hidden md:inline">
+          <span className="text-slate-300 hidden md:inline leading-none pt-[1px]">
             Authentic Crispy Caramelized Smash Burgers & Loaded Sides
           </span>
         </div>
 
-        {/* Right: Kitchen Timing & Direct WhatsApp Ordering */}
-        <div className="flex items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
-          <div className="flex items-center gap-1.5 text-amber-300 font-semibold">
+        {/* Right: Kitchen Timing */}
+        <div className="flex items-center justify-center text-[11px] sm:text-xs">
+          <span className="flex items-center gap-1.5 text-amber-300 font-bold bg-amber-950/40 border border-amber-900/50 px-2 py-0.5 rounded-full">
             <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>Open Daily • 12:00 PM – 2:00 AM</span>
-          </div>
-
-          <div className="w-1 h-1 rounded-full bg-slate-600 hidden sm:block"></div>
-
-          <a 
-            href="https://wa.me/919505021177?text=Hi%20Vibe%20Check%21%20I%20would%20like%20to%20place%20an%20order."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold transition-colors"
-          >
-            <MessageCircle className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400/20" />
-            <span>Direct WhatsApp: +91 9505021177</span>
-          </a>
+            <span className="leading-none pt-[1px]">Open Daily • 2:00 PM – 11:30 PM</span>
+          </span>
         </div>
 
       </div>
