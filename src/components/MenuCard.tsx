@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MenuItem } from '../types';
 import { getItemImageCandidates } from '../utils/menuImageMapper';
-import { subscribeToImageStore, saveImageFile } from '../utils/imageStore';
-import { Flame, Plus, Minus, Info, UtensilsCrossed, Camera, CheckCircle2, AlertCircle } from 'lucide-react';
+import { subscribeToImageStore } from '../utils/imageStore';
+import { Flame, Plus, Minus, Info, UtensilsCrossed, CheckCircle2, AlertCircle } from 'lucide-react';
 
 interface MenuCardProps {
   item: MenuItem;
@@ -24,7 +24,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({
   const [currentCandidateIndex, setCurrentCandidateIndex] = useState<number>(0);
   const [imageError, setImageError] = useState<boolean>(false);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Subscribe to image store updates so all cards refresh immediately on upload
   useEffect(() => {
@@ -57,18 +56,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({
   const handleImageLoad = () => {
     setImageLoaded(true);
     setImageError(false);
-  };
-
-  const handleQuickUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Save for this item's expected filename, ID, and item name
-      if (config?.expectedFilename) {
-        await saveImageFile(file, config.expectedFilename);
-      }
-      await saveImageFile(file, item.id);
-      await saveImageFile(file, item.name);
-    }
   };
 
   return (
@@ -110,28 +97,6 @@ export const MenuCard: React.FC<MenuCardProps> = ({
           )}
 
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80 pointer-events-none" />
-
-          {/* Hidden quick file uploader input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept="image/*"
-            className="hidden"
-            onChange={handleQuickUpload}
-          />
-
-          {/* Quick upload photo button on hover */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              fileInputRef.current?.click();
-            }}
-            title="Upload photo for this item"
-            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/90 hover:bg-rose-600 hover:text-white border border-slate-800 p-1.5 rounded-lg text-slate-400 shadow z-20 flex items-center gap-1 text-[10px] font-bold"
-          >
-            <Camera className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Set Photo</span>
-          </button>
 
           {/* Veg / Non-Veg Indicator */}
           <div className="absolute top-3 left-3 bg-slate-950/90 border border-slate-800 p-1 rounded shadow z-10">
