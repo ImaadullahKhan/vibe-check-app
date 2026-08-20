@@ -237,7 +237,7 @@ ${orderDetails}`;
                 {/* Contact Name */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-300" htmlFor="catering-name-input">
-                    Your Name / Organization
+                    Your Name / Organization <span className="text-rose-500">*</span>
                   </label>
                   <input
                     id="catering-name-input"
@@ -272,7 +272,7 @@ ${orderDetails}`;
                 {/* Contact Phone */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-300" htmlFor="catering-phone-input">
-                    Contact Phone (WhatsApp)
+                    Contact Phone (WhatsApp) <span className="text-rose-500">*</span>
                   </label>
                   <input
                     id="catering-phone-input"

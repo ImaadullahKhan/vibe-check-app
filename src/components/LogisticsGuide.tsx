@@ -135,7 +135,7 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
               <button
                 id="logistics-order-now-btn"
                 onClick={onExploreMenu}
-                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm py-3 px-4 rounded-xl shadow-lg transition-all duration-150"
+                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-lg transition-all duration-150"
               >
                 <MessageCircle className="w-4 h-4 fill-white" />
                 <span>Build Order & Send to WhatsApp</span>
@@ -146,7 +146,7 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
                   <img 
                     src="/whatsapp_qr.png" 
                     alt="WhatsApp QR Code to scan and open our menu catalog for ordering"
-                    className="w-16 h-16 object-contain"
+                    className="w-24 h-24 object-contain"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiIHJ5PSIyIi8+PHBhdGggZD0iTTggMTBoLjAxIi8+PHBhdGggZD0iTTE2IDEwaC4wMSIvPjxwYXRoIGQ9Ik04IDE0aC4wMSIvPjxwYXRoIGQ9Ik0xNiAxNGguMDEiLz48L3N2Zz4=';
                     }}

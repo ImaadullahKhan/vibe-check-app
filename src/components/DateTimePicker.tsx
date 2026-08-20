@@ -148,7 +148,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
           )}
         </h3>
         
-        <div className="grid grid-cols-2 gap-2 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
           {timeSlots.map((time) => {
             const isTimeSelected = selectedTime === time;
             
