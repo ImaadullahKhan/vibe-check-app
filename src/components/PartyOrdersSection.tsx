@@ -67,7 +67,7 @@ ${orderDetails}`;
   };
 
   return (
-    <section id="party-orders" className="scroll-mt-24 py-16 sm:py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800 relative overflow-hidden">
+    <section id="party-orders" className="scroll-mt-24 pt-6 pb-10 sm:pt-8 sm:pb-16 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800 relative overflow-hidden">
       
       {/* Glow */}
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
@@ -75,7 +75,7 @@ ${orderDetails}`;
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-950/80 text-rose-300 border border-rose-700/50">
             <Gift className="w-3.5 h-3.5 text-rose-400" />
             <span>Bulk Platters & Sliders Stations</span>

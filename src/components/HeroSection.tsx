@@ -76,13 +76,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }, [storeVersion]);
 
   return (
-    <section className="relative overflow-hidden pt-6 pb-12 sm:py-16 lg:py-20 border-b border-slate-800/80">
+    <section className="relative overflow-hidden pt-6 pb-8 sm:py-12 lg:py-16 border-b border-slate-800/80">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-rose-600/10 blur-[130px] pointer-events-none rounded-full" />
       <div className="absolute top-1/3 right-10 w-[300px] h-[300px] bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
           
           {/* Left Hero Copy */}
           <div className="lg:col-span-7 space-y-6 text-left">

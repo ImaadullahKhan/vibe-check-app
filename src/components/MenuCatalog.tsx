@@ -1,15 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { 
   Search, 
-  Flame, 
   Check, 
-  ShoppingBag, 
   ArrowUpDown, 
-  Utensils, 
-  Leaf, 
-  Wrench,
-  HelpCircle,
-  UploadCloud
+  ShoppingBag,
+  Leaf,
+  LayoutGrid,
+  Hamburger,
+  Sandwich,
+  Popcorn,
+  CupSoda,
+  GlassWater,
+  Utensils,
+  Flame
 } from 'lucide-react';
 import { MENU_ITEMS, CATEGORIES } from '../data/menuData';
 import { MenuItem, CategoryId } from '../types';
@@ -23,6 +26,34 @@ interface MenuCatalogProps {
   cartTotalCount: number;
 }
 
+const WrapIcon = ({ className = "w-6 h-6", ...props }: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <path d="M12 16L18 10a3 3 0 0 0-4-4L8 12" />
+    <path d="M8 12c2 0 4 2 4 4" />
+    <path d="M8 12c-4-1-6 4-2 6 2 1 4 0 6-2" />
+    <path d="M6 14c1 1 2 0 3 1" />
+    <path d="M5 16c2 1 4-1 6 0" />
+    <path d="M13 8l2 2" />
+    <path d="M11 10l2 2" />
+    <path d="M9 12l2 2" />
+    <path d="M7 6c0-1.5 1.5-1.5 1.5-3S7 1.5 7 1" />
+    <path d="M11 6c0-1.5 1.5-1.5 1.5-3S11 1.5 11 1" />
+  </svg>
+);
+
+const getCategoryIcon = (id: string, className = "w-6 h-6") => {
+  switch (id) {
+    case 'all': return <LayoutGrid className={className} />;
+    case 'burgers': return <Hamburger className={className} />;
+    case 'wiches': return <Sandwich className={className} />;
+    case 'sides': return <Popcorn className={className} />;
+    case 'wraps': return <WrapIcon className={className} />;
+    case 'shakes': return <CupSoda className={className} />;
+    case 'coolers': return <GlassWater className={className} />;
+    default: return <Utensils className={className} />;
+  }
+};
+
 export const MenuCatalog: React.FC<MenuCatalogProps> = ({
   onSelectItem,
   onAddToCart,
@@ -35,22 +66,20 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
   const [vegOnly, setVegOnly] = useState(false);
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high'>('featured');
 
-  // Filter and sort items
   const filteredItems = useMemo(() => {
     return MENU_ITEMS.filter((item) => {
-      // Category match
-      if (selectedCategory !== 'all' && item.category !== selectedCategory) {
-        return false;
-      }
-      // Veg only toggle
-      if (vegOnly && !item.isVeg) {
-        return false;
-      }
-      // Search query
-      if (searchQuery.trim()) {
+      // Veg Filter
+      if (vegOnly && !item.isVeg) return false;
+
+      // Category Filter (Handled dynamically in grouping now, but we still apply it to filteredItems)
+      // Actually, if 'all', we want all items. If not, filter by category.
+      if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
+
+      // Search Text Filter
+      if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase();
         const matchesName = item.name.toLowerCase().includes(q);
-        const matchesDesc = item.description.toLowerCase().includes(q);
+        const matchesDesc = item.description?.toLowerCase().includes(q);
         const matchesTags = item.tags?.some(t => t.toLowerCase().includes(q));
         if (!matchesName && !matchesDesc && !matchesTags) {
           return false;
@@ -60,6 +89,7 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
     }).sort((a, b) => {
       if (sortBy === 'price-low') return a.price - b.price;
       if (sortBy === 'price-high') return b.price - a.price;
+      
       // Default: bestsellers first, then id
       if (a.isBestseller && !b.isBestseller) return -1;
       if (!a.isBestseller && b.isBestseller) return 1;
@@ -76,21 +106,22 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
     }
   };
 
+  // Group items by category for rendering
+  const activeCategories = CATEGORIES.filter(cat => cat.id !== 'all' && (selectedCategory === 'all' || selectedCategory === cat.id));
+
   return (
-    <section id="menu-catalog" className="scroll-mt-24 py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section id="menu-catalog" className="scroll-mt-24 pt-6 pb-10 sm:pt-8 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-rose-950/80 text-rose-300 border border-rose-700/50">
             <Flame className="w-3.5 h-3.5 text-rose-500" />
             <span>Artisanal 34-Item Master Catalog</span>
           </div>
-
           <h2 className="font-['Outfit',sans-serif] text-3xl sm:text-5xl font-black text-white tracking-tight">
             Explore The <span className="text-rose-500">Menu</span>
           </h2>
-
           <p className="text-slate-400 text-sm sm:text-base max-w-xl">
             From crispy smash burgers and loaded pressed &apos;wiches to fiery tenders, falafels, Biscoff shakes, and sparkling coolers.
           </p>
@@ -100,7 +131,7 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           
           {/* Search Box */}
-          <div className="relative min-w-[240px]">
+          <div className="relative flex-1 sm:min-w-[240px]">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               id="menu-search-input"
@@ -120,41 +151,43 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
             )}
           </div>
 
-          {/* Veg-Only Toggle */}
-          <button
-            id="veg-only-toggle-btn"
-            onClick={() => setVegOnly(!vegOnly)}
-            className={`flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border ${
-              vegOnly 
-                ? 'bg-emerald-950 text-emerald-300 border-emerald-500 shadow-md shadow-emerald-950/40' 
-                : 'bg-slate-900 text-slate-300 border-slate-700/80 hover:border-slate-600'
-            }`}
-          >
-            <Leaf className={`w-3.5 h-3.5 ${vegOnly ? 'text-emerald-400' : 'text-slate-400'}`} />
-            <span>Veg Only</span>
-            {vegOnly && <Check className="w-3 h-3 text-emerald-400" />}
-          </button>
-
-          {/* Sort Dropdown */}
-          <div className="relative">
-            <select
-              id="menu-sort-select"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full bg-slate-900 border border-slate-700/80 text-xs font-semibold text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-rose-500 appearance-none pr-8 cursor-pointer"
+          {/* Filters Row */}
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center w-full sm:w-auto">
+            {/* Veg-Only Toggle */}
+            <button
+              id="veg-only-toggle-btn"
+              onClick={() => setVegOnly(!vegOnly)}
+              className={`flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 border w-full sm:w-auto ${
+                vegOnly 
+                  ? 'bg-emerald-950 text-emerald-300 border-emerald-500 shadow-md shadow-emerald-950/40' 
+                  : 'bg-slate-900 text-slate-300 border-slate-700/80 hover:border-slate-600'
+              }`}
             >
-              <option value="featured">Featured & Bestsellers</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-            </select>
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          </div>
+              <Leaf className={`w-3.5 h-3.5 ${vegOnly ? 'text-emerald-400' : 'text-slate-400'}`} />
+              <span>Veg Only</span>
+              {vegOnly && <Check className="w-3 h-3 text-emerald-400" />}
+            </button>
 
+            {/* Sort Dropdown */}
+            <div className="relative w-full sm:w-auto">
+              <select
+                id="menu-sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="w-full bg-slate-900 border border-slate-700/80 text-xs font-semibold text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-rose-500 appearance-none pr-8 cursor-pointer"
+              >
+                <option value="featured">Featured & Bestsellers</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+              <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Category Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar scroll-smooth">
+      {/* Category Icon Filters */}
+      <div className="flex flex-nowrap items-start justify-between w-full mb-8">
         {CATEGORIES.map((cat) => {
           const isSelected = selectedCategory === cat.id;
           return (
@@ -162,17 +195,19 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
               key={cat.id}
               id={`filter-tab-${cat.id}`}
               onClick={() => setSelectedCategory(cat.id as CategoryId)}
-              className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 border ${
-                isSelected
-                  ? 'bg-rose-600 text-white border-rose-500 shadow-lg shadow-rose-950/60 scale-[1.02]'
-                  : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
-              }`}
+              className="flex-1 flex flex-col items-center gap-1.5 group"
             >
-              <span>{cat.label}</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-extrabold ${
-                isSelected ? 'bg-rose-800 text-white' : 'bg-slate-800 text-slate-400'
+              <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-200 border ${
+                isSelected 
+                  ? 'bg-rose-600 text-white border-rose-500 shadow-lg shadow-rose-950/60 scale-105' 
+                  : 'bg-slate-900/90 text-slate-400 border-slate-800 group-hover:border-slate-600 group-hover:text-slate-300'
               }`}>
-                {cat.count}
+                {getCategoryIcon(cat.id, 'w-4 h-4 sm:w-6 sm:h-6')}
+              </div>
+              <span className={`text-[9px] sm:text-[11px] text-center font-bold leading-tight ${
+                isSelected ? 'text-white' : 'text-slate-400 group-hover:text-slate-300'
+              }`}>
+                {cat.label}
               </span>
             </button>
           );
@@ -198,20 +233,36 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
         </div>
       )}
 
-      {/* Menu Items Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredItems.map((item) => {
-          const inCartCount = cartQuantities[item.id] || 0;
-
+      {/* Grouped Menu Items Grid */}
+      <div className="space-y-8">
+        {activeCategories.map(cat => {
+          const categoryItems = filteredItems.filter(item => item.category === cat.id);
+          if (categoryItems.length === 0) return null;
+          
           return (
-            <MenuCard
-              key={item.id}
-              item={item}
-              inCartCount={inCartCount}
-              onAddToCart={(item) => onAddToCart(item, 1)}
-              onUpdateQuantity={handleUpdateQuantity}
-              onSelectItem={onSelectItem}
-            />
+            <div key={cat.id} className="pt-2">
+              {/* Category Line Bracket Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-white whitespace-nowrap">{cat.label}</h3>
+                <div className="h-px bg-slate-800 flex-1"></div>
+              </div>
+              
+              <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                {categoryItems.map((item) => {
+                  const inCartCount = cartQuantities[item.id] || 0;
+                  return (
+                    <MenuCard
+                      key={item.id}
+                      item={item}
+                      inCartCount={inCartCount}
+                      onAddToCart={(item) => onAddToCart(item, 1)}
+                      onUpdateQuantity={handleUpdateQuantity}
+                      onSelectItem={onSelectItem}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           );
         })}
       </div>
@@ -238,7 +289,6 @@ export const MenuCatalog: React.FC<MenuCatalogProps> = ({
           </button>
         </div>
       )}
-
     </section>
   );
 };

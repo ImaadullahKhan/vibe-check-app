@@ -21,10 +21,10 @@ export const InstagramReelsSection: React.FC = () => {
   };
 
   return (
-    <section id="instagram-reels" className="scroll-mt-24 py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+    <section id="instagram-reels" className="scroll-mt-24 pt-6 pb-10 sm:pt-8 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-gradient-to-r from-rose-950 to-purple-950 text-rose-300 border border-rose-700/50">
             <Instagram className="w-3.5 h-3.5 text-rose-400" />

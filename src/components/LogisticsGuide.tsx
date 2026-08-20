@@ -24,7 +24,7 @@ export const LogisticsGuide: React.FC<LogisticsGuideProps> = ({
   onWhatsAppClick
 }) => {
   return (
-    <section id="how-to-order" className="scroll-mt-24 py-14 sm:py-20 bg-slate-900/40 border-y border-slate-800/80 relative">
+    <section id="how-to-order" className="scroll-mt-24 pt-6 pb-10 sm:pt-8 sm:pb-16 bg-slate-900/40 border-y border-slate-800/80 relative">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
